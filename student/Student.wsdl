@@ -1,0 +1,54 @@
+<definitions xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://service.bcc.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://service.bcc.com/" name="StudentListServiceService">
+<types>
+<xs:schema xmlns:tns="http://service.bcc.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://service.bcc.com/">
+<xs:element name="getStudents" type="tns:getStudents"/>
+<xs:element name="getStudentsResponse" type="tns:getStudentsResponse"/>
+<xs:complexType name="getStudents">
+<xs:sequence>
+<xs:element name="arg0" type="tns:student" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="student">
+<xs:sequence>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:string" minOccurs="0"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getStudentsResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:student" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+</types>
+<message name="getStudents">
+<part name="parameters" element="tns:getStudents"/>
+</message>
+<message name="getStudentsResponse">
+<part name="parameters" element="tns:getStudentsResponse"/>
+</message>
+<portType name="StudentListService">
+<operation name="getStudents">
+<input wsam:Action="http://service.bcc.com/StudentListService/getStudentsRequest" message="tns:getStudents"/>
+<output wsam:Action="http://service.bcc.com/StudentListService/getStudentsResponse" message="tns:getStudentsResponse"/>
+</operation>
+</portType>
+<binding name="StudentListServicePortBinding" type="tns:StudentListService">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<operation name="getStudents">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+</binding>
+<service name="StudentListServiceService">
+<port name="StudentListServicePort" binding="tns:StudentListServicePortBinding">
+<soap:address location="http://webapp-pqms.rhcloud.com:80/Student/studentList"/>
+</port>
+</service>
+</definitions>
